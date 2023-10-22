@@ -14,7 +14,14 @@ The `MCMC_Tr` function also provides other optional arguments for users to contr
 * `hypParam.brLen_`: the mean hyper-parameter for the prior on the edge lengths; the default is 1;
 * `seed_`: the real number to control the random seed
   
+The `MCMC_Tr` function generates the posterior samples in a named list object, and users can access the results by the name below:
+* `llh`: the log-likelihood for the algorithm;
+* `rtEdge`: a real vector showing the posterior samples for the lengths of root edge;
+* `split`: a list object containing the posterior edge sets and the internal edge lengths;
+* `tip`: a list object including the posterior samples of the leaf edge lengths;
+* `init.Tr`: a list specifying the initial tree used in the algorithm.
 
+## Other useful functions
 The package also offers other necessary functions to build the bijection map between the ultrametric matrix and the tree structure. Specifically, we store the tree object in two different formats: (1) `phylo4` object from the `phylobase` package and (2) the edge set of the matrix. We list all functions that allow users to map bijectively between the ultrametric matrices and the tree objects.
 * `phylo42Splt`
 * `phylo42TrCov`
