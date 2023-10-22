@@ -5,16 +5,11 @@ library(phylobase)
 library(mvtnorm)
 library(truncnorm)
 library(ggplot2)
-setwd("~/Research/UltrametricsMat/")
-source("./Code/MCMC_BHV_Func.R")
+library(here)
+source(here("ultrametricMat","Code","MCMC_BHV_Func.R"))
 
-# nLeaf<-10
-# nLeaf<-12
-# nLeaf<-20
-
-
-args <- commandArgs(TRUE)
-#args<-c("rtEdge_rtree","10","1","1","1")
+# args <- commandArgs(TRUE)
+args<-c("rtEdge_rtree","10","1","1","1")
 print(args)
 trueTrType=trimws(args[1])
 nLeaf<-as.numeric(args[2])
@@ -22,8 +17,7 @@ nIdx<-as.numeric(args[3])
 lIdx<-as.numeric(args[4])
 rIdx<-as.numeric(args[5])
 
-# trueList<-readRDS(paste0("./SimData/",trueTrType,"_nLeaf",nLeaf,".RDS"))
-trueList<-readRDS(paste0("./SimData/",trueTrType,"_nLeaf",nLeaf,".RDS"))
+trueList<-readRDS(here("ultrametricMat","Data",paste0("",trueTrType,"_nLeaf",nLeaf,".RDS")))
 df.ls<-trueList$df
 nSmp.len<-length(df.ls)
 nRep<-length(df.ls[[1]])
@@ -35,8 +29,8 @@ llh.type<-llh.typeVec[lIdx]
 
 # beta_=-1.5
 # betaSplt.tbl<-betaSplt.tbl.gen(n=nLeaf,beta_=beta_)
-# saveRDS(betaSplt.tbl, file=paste0("./SimData/betaSpltTbl_unif_nLeaf",nLeaf,".RDS"))
-betaSplt.tbl<-readRDS(paste0("./SimData/betaSpltTbl_unif_nLeaf",nLeaf,".RDS"))
+# saveRDS(betaSplt.tbl, file=here("ultrametricMat","MCMC_Res",paste0("betaSpltTbl_unif_nLeaf",nLeaf,".RDS")))
+betaSplt.tbl<-readRDS(here("ultrametricMat","MCMC_Res",paste0("betaSpltTbl_unif_nLeaf",nLeaf,".RDS")))
 
 
 #### simulation start ####
@@ -57,6 +51,6 @@ NNI.t<-system.time({NNI_dis<-MCMC_Tr(Obsdf_ = obsDf, betaSplt.tbl_ = betaSplt.tb
 # saveRDS(list(res=NNI_dis,t=NNI.t[1:3]),
 #         paste0("./Res/",trueTrType,"/MCMC/nLeaf",nLeaf,"_nSmp",nSmp,"_llh",llh.type,"_rep",rIdx,".RDS"))
 saveRDS(list(res=NNI_dis,t=NNI.t[1:3]),
-        paste0("./Res/",trueTrType,"/MCMC/nTr_nLeaf",nLeaf,"_nSmp",nSmp,"_llh",llh.type,"_rep",rIdx,".RDS"))
+        file=here("UltrametricMat","MCMC_Res",paste0(trueTrType,"_nTr_nLeaf",nLeaf,"_nSmp",nSmp,"_llh",llh.type,"_rep",rIdx,".RDS")))
 
 
